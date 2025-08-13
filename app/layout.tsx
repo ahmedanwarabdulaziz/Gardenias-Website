@@ -14,9 +14,9 @@ export const metadata: Metadata = {
   keywords: 'massage therapy, healthcare, wellness, therapeutic massage, relaxation, Gardenias Healthcare',
   authors: [{ name: 'Gardenias Healthcare' }],
   icons: {
-    icon: '/favicon.ico',
-    shortcut: '/favicon.ico',
-    apple: '/img/001.png',
+    icon: '/img/Black-logo.png',
+    shortcut: '/img/Black-logo.png',
+    apple: '/img/Black-logo.png',
   },
   openGraph: {
     title: 'Gardenias Healthcare - Professional Massage Therapy Clinic',
