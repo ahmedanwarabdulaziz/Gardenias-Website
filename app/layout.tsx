@@ -13,6 +13,11 @@ export const metadata: Metadata = {
   description: 'Experience the healing touch of professional massage therapy at Gardenias Healthcare. Our skilled therapists provide therapeutic massage services to promote wellness and relaxation.',
   keywords: 'massage therapy, healthcare, wellness, therapeutic massage, relaxation, Gardenias Healthcare',
   authors: [{ name: 'Gardenias Healthcare' }],
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+    apple: '/img/001.png',
+  },
   openGraph: {
     title: 'Gardenias Healthcare - Professional Massage Therapy Clinic',
     description: 'Experience the healing touch of professional massage therapy at Gardenias Healthcare.',
