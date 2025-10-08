@@ -105,6 +105,12 @@ export interface ServiceFormData {
   directBilling: boolean;
   cancellationPolicy?: string;
   internalNotes?: string;
+  
+  // Display & Ordering
+  displayOrder: number;
+  
+  // Auto fields
+  createdBy: string;
 }
 
 interface ServiceFormProps {
@@ -164,7 +170,6 @@ export default function ServiceForm({ service, onSave, onCancel, categories, sta
       videoLink: service.videoLink || '',
       practitioners: service.practitioners || [],
       bookingLink: service.bookingLink || '',
-      buttonLabel: service.buttonLabel || 'Book Now',
       preBookingNote: service.preBookingNote || '',
       postBookingInstructions: service.postBookingInstructions || '',
       seoTitle: service.seoTitle || '',
@@ -176,6 +181,8 @@ export default function ServiceForm({ service, onSave, onCancel, categories, sta
       directBilling: service.directBilling || false,
       cancellationPolicy: service.cancellationPolicy || '',
       internalNotes: service.internalNotes || '',
+      displayOrder: service.displayOrder || 0,
+      createdBy: service.createdBy || '',
     } : {
       name: '',
       shortDescription: '',
@@ -201,7 +208,6 @@ export default function ServiceForm({ service, onSave, onCancel, categories, sta
       videoLink: '',
       practitioners: [],
       bookingLink: '',
-      buttonLabel: 'Book Now',
       preBookingNote: '',
       postBookingInstructions: '',
       seoTitle: '',
@@ -213,6 +219,8 @@ export default function ServiceForm({ service, onSave, onCancel, categories, sta
       directBilling: false,
       cancellationPolicy: '',
       internalNotes: '',
+      displayOrder: 0,
+      createdBy: '',
     }
   );
 
