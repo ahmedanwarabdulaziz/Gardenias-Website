@@ -281,7 +281,7 @@ export default function CategoryForm({ category, onSave, onCancel }: CategoryFor
     const newErrors: Partial<Record<keyof CategoryFormData, string>> = {};
     Object.keys(formData).forEach(key => {
       const field = key as keyof CategoryFormData;
-      const error = validateField(field, formData[field]);
+      const error = validateField(field, formData[field] || '');
       if (error) {
         newErrors[field] = error;
       }
