@@ -281,6 +281,8 @@ export default function ServiceForm({ service, onSave, onCancel, categories, sta
         directBilling: service.directBilling || false,
         cancellationPolicy: service.cancellationPolicy || '',
         internalNotes: service.internalNotes || '',
+        displayOrder: service.displayOrder || 0,
+        createdBy: service.createdBy || '',
       });
     }
   }, [service]);
