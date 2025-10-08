@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { ServiceService, Service } from '@/lib/serviceService';
 import { CategoryService, Category } from '@/lib/categoryService';
 import { StaffService, StaffMember } from '@/lib/staffService';
+import { ServiceFormData } from '@/components/services/ServiceForm';
 import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors, DragEndEvent } from '@dnd-kit/core';
 import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { useSortable } from '@dnd-kit/sortable';
@@ -289,7 +290,7 @@ export default function ServicesPage() {
     }
   };
 
-  const handleSaveService = async (serviceData: Omit<Service, 'id' | 'createdAt' | 'updatedAt'>) => {
+  const handleSaveService = async (serviceData: ServiceFormData) => {
     console.log('handleSaveService called with:', serviceData);
     try {
       if (editingService) {

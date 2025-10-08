@@ -52,7 +52,7 @@ import { Category } from '@/lib/categoryService';
 import { StaffMember } from '@/lib/staffService';
 import { getImageSizeInfo, formatFileSize, validateImageSize } from '@/lib/imageUtils';
 
-interface ServiceFormData {
+export interface ServiceFormData {
   // Basic Information
   name: string;
   shortDescription: string;
