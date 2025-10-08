@@ -1052,7 +1052,7 @@ export default function CategoryForm({ category, onSave, onCancel }: CategoryFor
                 onChange={handleChange('seoDescription')}
                 onBlur={handleBlur('seoDescription')}
                 error={!!getFieldError('seoDescription')}
-                helperText={getFieldError('seoDescription') || `${formData.seoDescription.length}/160 characters`}
+                helperText={getFieldError('seoDescription') || `${formData.seoDescription?.length || 0}/160 characters`}
                 sx={{
                   '& .MuiOutlinedInput-root': {
                     borderRadius: 2,
