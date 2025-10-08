@@ -187,7 +187,7 @@ export default function CategoryForm({ category, onSave, onCancel }: CategoryFor
 
   const handleBlur = (field: keyof CategoryFormData) => () => {
     setTouched(prev => ({ ...prev, [field]: true }));
-    setErrors(prev => ({ ...prev, [field]: validateField(field, formData[field]) }));
+    setErrors(prev => ({ ...prev, [field]: validateField(field, formData[field] || '') }));
   };
 
   // Auto-generate slug from name
