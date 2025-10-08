@@ -51,18 +51,18 @@ interface StaffFormData {
   address?: string;
   isActive: boolean;
   // Professional Details
-  shortBio: string;
-  fullBiography: string;
-  credentials: string;
-  areasOfSpecialization: string[]; // SEO tags for search and filtering
-  yearsOfExperience: string;
-  spokenLanguages: string[];
-  education: Array<{
+  shortBio?: string;
+  fullBiography?: string;
+  credentials?: string;
+  areasOfSpecialization?: string[]; // SEO tags for search and filtering
+  yearsOfExperience?: string;
+  spokenLanguages?: string[];
+  education?: Array<{
     institution: string;
     program: string;
     year: string;
   }>;
-  associations: string;
+  associations?: string;
 }
 
 interface StaffFormProps {
