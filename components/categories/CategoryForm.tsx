@@ -158,26 +158,27 @@ export default function CategoryForm({ category, onSave, onCancel }: CategoryFor
     setFormData({ ...formData, isActive: event.target.checked });
   };
 
-  const validateField = (field: keyof CategoryFormData, value: unknown): string | undefined => {
+  const validateField = (field: keyof CategoryFormData, value: string | boolean | number): string | undefined => {
+    const strValue = String(value);
     switch (field) {
       case 'name':
-        if (!value.trim()) return 'Category name is required';
-        if (!validateName(value)) return 'Name must be at least 2 characters';
+        if (!strValue.trim()) return 'Category name is required';
+        if (!validateName(strValue)) return 'Name must be at least 2 characters';
         return undefined;
       case 'shortDescription':
-        if (!value.trim()) return 'Short description is required';
-        if (!validateShortDescription(value)) return 'Description must be 10-200 characters';
+        if (!strValue.trim()) return 'Short description is required';
+        if (!validateShortDescription(strValue)) return 'Description must be 10-200 characters';
         return undefined;
       case 'fullDescription':
-        if (!value.trim()) return 'Full description is required';
-        if (!validateFullDescription(value)) return 'Description must be at least 50 characters';
+        if (!strValue.trim()) return 'Full description is required';
+        if (!validateFullDescription(strValue)) return 'Description must be at least 50 characters';
         return undefined;
       case 'slug':
-        if (!value.trim()) return 'Slug is required';
-        if (!validateSlug(value)) return 'Slug must contain only lowercase letters, numbers, and hyphens';
+        if (!strValue.trim()) return 'Slug is required';
+        if (!validateSlug(strValue)) return 'Slug must contain only lowercase letters, numbers, and hyphens';
         return undefined;
       case 'seoDescription':
-        if (value && !validateSeoDescription(value)) return 'SEO description must be 160 characters or less';
+        if (strValue && !validateSeoDescription(strValue)) return 'SEO description must be 160 characters or less';
         return undefined;
       default:
         return undefined;
