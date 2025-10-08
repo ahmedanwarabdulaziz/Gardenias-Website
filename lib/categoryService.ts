@@ -140,7 +140,7 @@ export class CategoryService {
       console.log('Authentication successful');
 
       // Handle image compression
-      let processedCategoryData = { ...categoryData };
+      const processedCategoryData = { ...categoryData };
       if (categoryData.icon && categoryData.icon.startsWith('data:')) {
         try {
           const compressedIcon = await this.compressImage(categoryData.icon, 600, 0.8);
@@ -194,7 +194,7 @@ export class CategoryService {
       await this.ensureAuth();
 
       // Handle image compression
-      let processedCategoryData = { ...categoryData };
+      const processedCategoryData = { ...categoryData };
       if (categoryData.icon && categoryData.icon.startsWith('data:')) {
         try {
           const compressedIcon = await this.compressImage(categoryData.icon, 600, 0.8);

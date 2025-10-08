@@ -112,7 +112,7 @@ export class ServiceService {
   }
 
   // Check if document size is within Firestore limits
-  private static checkDocumentSize(data: any): boolean {
+  private static checkDocumentSize(data: unknown): boolean {
     const jsonString = JSON.stringify(data);
     const sizeInBytes = new Blob([jsonString]).size;
     const maxSize = 1048487; // Firestore limit
@@ -218,7 +218,7 @@ export class ServiceService {
       await this.ensureAuth();
       console.log('Authentication successful');
 
-      let processedServiceData = { ...serviceData };
+      const processedServiceData = { ...serviceData };
 
       // Handle image compression
       if (processedServiceData.heroImage && processedServiceData.heroImage.startsWith('data:')) {
@@ -300,7 +300,7 @@ export class ServiceService {
     try {
       await this.ensureAuth();
 
-      let processedServiceData = { ...serviceData };
+      const processedServiceData = { ...serviceData };
 
       // Auto-generate slug from name if name is being updated
       if (processedServiceData.name) {

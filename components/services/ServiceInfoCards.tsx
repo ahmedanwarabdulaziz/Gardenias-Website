@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, Container, Grid, Card, CardContent, Typography } from '@mui/material';
+import { Box, Container, Card, CardContent, Typography } from '@mui/material';
 
 interface ServiceInfoCardsProps {
   whoItsFor: string[];

@@ -337,7 +337,7 @@ export default function ServiceForm({ service, onSave, onCancel, categories, sta
   });
 
   const handleChange = (prop: keyof ServiceFormData) => (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    let value: any = event.target.value;
+    let value: string | boolean = event.target.value;
     
     if (prop === 'isActive' || prop === 'insuranceCoverage' || prop === 'directBilling') {
       value = (event.target as HTMLInputElement).checked;
@@ -928,7 +928,7 @@ export default function ServiceForm({ service, onSave, onCancel, categories, sta
                   {/* Who It's For - Single Row */}
                   <Box>
                     <BrandTypography variant="text" sx={{ mb: 2, fontWeight: 600 }}>
-                      Who It's For
+                      Who It&apos;s For
                     </BrandTypography>
                     <Box sx={{ display: 'flex', gap: 2, alignItems: 'flex-start', mb: 2 }}>
                       <TextField

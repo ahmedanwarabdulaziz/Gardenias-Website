@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, Container, Typography, Paper } from '@mui/material';
+import { Box, Container, Typography } from '@mui/material';
 
 interface StaffMember {
   id: string;

@@ -99,7 +99,7 @@ export default function HeroSection() {
             At Gardenias Healthcare Clinic, we combine evidence-based therapies with 
             compassionate care to help you move, heal, and feel your best. Our team of 
             licensed professionals works together to restore balance, reduce pain, and 
-            support your body's natural ability to recover — one treatment at a time.
+            support your body&apos;s natural ability to recover — one treatment at a time.
           </Typography>
 
           <Box 

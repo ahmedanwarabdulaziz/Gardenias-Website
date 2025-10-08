@@ -24,7 +24,7 @@ export class LocalStaffService {
       const stored = localStorage.getItem(this.STORAGE_KEY);
       if (stored) {
         const staff = JSON.parse(stored);
-        return staff.map((member: any) => ({
+        return staff.map((member: StaffMember) => ({
           ...member,
           createdAt: new Date(member.createdAt),
           updatedAt: new Date(member.updatedAt),

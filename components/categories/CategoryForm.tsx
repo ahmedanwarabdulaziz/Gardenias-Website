@@ -158,7 +158,7 @@ export default function CategoryForm({ category, onSave, onCancel }: CategoryFor
     setFormData({ ...formData, isActive: event.target.checked });
   };
 
-  const validateField = (field: keyof CategoryFormData, value: any): string | undefined => {
+  const validateField = (field: keyof CategoryFormData, value: unknown): string | undefined => {
     switch (field) {
       case 'name':
         if (!value.trim()) return 'Category name is required';
@@ -422,7 +422,7 @@ export default function CategoryForm({ category, onSave, onCancel }: CategoryFor
                     Short Description *
                   </BrandTypography>
                   <BrandTypography variant="caption" sx={{ color: 'text.secondary' }}>
-                    1-2 sentences that summarize the category's purpose (10-200 characters)
+                    1-2 sentences that summarize the category&apos;s purpose (10-200 characters)
                   </BrandTypography>
                 </Box>
               </Box>

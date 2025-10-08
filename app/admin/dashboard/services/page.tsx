@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { ServiceService, Service } from '@/lib/serviceService';
 import { CategoryService, Category } from '@/lib/categoryService';
 import { StaffService, StaffMember } from '@/lib/staffService';
-import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
+import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors, DragEndEvent } from '@dnd-kit/core';
 import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
@@ -83,7 +83,7 @@ function SortableServiceRow({
     opacity: isDragging ? 0.5 : 1,
   };
 
-  const getPriceRange = (sessionDurations: any[]) => {
+  const getPriceRange = (sessionDurations: { duration: number; price: number }[]) => {
     if (!sessionDurations || sessionDurations.length === 0) return 'N/A';
     const prices = sessionDurations.map(s => s.price);
     const minPrice = Math.min(...prices);
@@ -289,7 +289,7 @@ export default function ServicesPage() {
     }
   };
 
-  const handleSaveService = async (serviceData: any) => {
+  const handleSaveService = async (serviceData: Omit<Service, 'id' | 'createdAt' | 'updatedAt'>) => {
     console.log('handleSaveService called with:', serviceData);
     try {
       if (editingService) {
@@ -351,7 +351,7 @@ export default function ServicesPage() {
   }, {} as Record<string, Service[]>);
 
   // Handle drag end
-  const handleDragEnd = async (event: any) => {
+  const handleDragEnd = async (event: DragEndEvent) => {
     const { active, over } = event;
     
     if (active.id !== over.id) {

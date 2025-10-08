@@ -145,7 +145,7 @@ export class StaffService {
       await this.ensureAuth();
       
       // Handle image upload separately if it's a data URL
-      let processedStaffData = { ...staffData };
+      const processedStaffData = { ...staffData };
       if (staffData.picture && staffData.picture.startsWith('data:')) {
         try {
           // Compress image if it's too large
@@ -184,7 +184,7 @@ export class StaffService {
       await this.ensureAuth();
       
       // Handle image upload separately if it's a data URL
-      let processedStaffData = { ...staffData };
+      const processedStaffData = { ...staffData };
       if (staffData.picture && staffData.picture.startsWith('data:')) {
         try {
           // Compress image if it's too large
