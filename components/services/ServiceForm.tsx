@@ -13,7 +13,7 @@ import {
   FormControlLabel,
   Switch,
   InputAdornment,
-  Grid,
+  Grid2,
   Chip,
   IconButton,
   Select,
@@ -2171,8 +2171,8 @@ export default function ServiceForm({ service, onSave, onCancel, categories, sta
                   </Box>
                 </Box>
 
-                <Grid container spacing={3}>
-                <Grid item xs={12} md={6}>
+                <Grid2 container spacing={3}>
+                <Grid2 size={{ xs: 12, md: 6 }}>
                   <FormControlLabel
                     control={
                       <Switch
@@ -2194,9 +2194,9 @@ export default function ServiceForm({ service, onSave, onCancel, categories, sta
                     }
                     sx={{ alignItems: 'flex-start', mt: 1 }}
                   />
-                </Grid>
+                </Grid2>
 
-                <Grid item xs={12} md={6}>
+                <Grid2 size={{ xs: 12, md: 6 }}>
                   <FormControlLabel
                     control={
                       <Switch
@@ -2218,9 +2218,9 @@ export default function ServiceForm({ service, onSave, onCancel, categories, sta
                     }
                     sx={{ alignItems: 'flex-start', mt: 1 }}
                   />
-                </Grid>
+                </Grid2>
 
-                <Grid item xs={12}>
+                <Grid2 size={{ xs: 12 }}>
                   <TextField
                     fullWidth
                     multiline
@@ -2243,9 +2243,9 @@ export default function ServiceForm({ service, onSave, onCancel, categories, sta
                       },
                     }}
                   />
-                </Grid>
+                </Grid2>
 
-                <Grid item xs={12}>
+                <Grid2 size={{ xs: 12 }}>
                   <TextField
                     fullWidth
                     multiline
@@ -2268,9 +2268,9 @@ export default function ServiceForm({ service, onSave, onCancel, categories, sta
                       },
                     }}
                   />
-                </Grid>
+                </Grid2>
 
-                <Grid item xs={12}>
+                <Grid2 size={{ xs: 12 }}>
                   <TextField
                     fullWidth
                     multiline
@@ -2300,8 +2300,8 @@ export default function ServiceForm({ service, onSave, onCancel, categories, sta
                       },
                     }}
                   />
-                </Grid>
-              </Grid>
+                </Grid2>
+              </Grid2>
               </Paper>
             </Box>
           </TabPanel>
