@@ -13,7 +13,6 @@ import {
   FormControlLabel,
   Switch,
   InputAdornment,
-  Grid2,
   Chip,
   IconButton,
   Select,
@@ -25,6 +24,7 @@ import {
   Checkbox,
   Divider,
 } from '@mui/material';
+import Grid2 from '@mui/material/Grid2';
 import {
   PhotoCamera as PhotoCameraIcon,
   Save as SaveIcon,
