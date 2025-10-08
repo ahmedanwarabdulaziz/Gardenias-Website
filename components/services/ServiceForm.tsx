@@ -355,6 +355,10 @@ export default function ServiceForm({ service, onSave, onCancel, categories, sta
     setFormData(prev => ({ ...prev, [prop]: value }));
   };
 
+  const handleSelectChange = (prop: keyof ServiceFormData) => (event: { target: { value: string } }) => {
+    setFormData(prev => ({ ...prev, [prop]: event.target.value }));
+  };
+
   const handleArrayChange = (prop: keyof ServiceFormData, value: string[]) => {
     setFormData(prev => ({ ...prev, [prop]: value }));
   };
@@ -626,7 +630,7 @@ export default function ServiceForm({ service, onSave, onCancel, categories, sta
                     <InputLabel>Category *</InputLabel>
                     <Select
                       value={formData.categoryId}
-                      onChange={handleChange('categoryId')}
+                      onChange={handleSelectChange('categoryId')}
                       label="Category *"
                       startAdornment={
                         <InputAdornment position="start">
@@ -766,7 +770,7 @@ export default function ServiceForm({ service, onSave, onCancel, categories, sta
                     <InputLabel>Tax Type</InputLabel>
                     <Select
                       value={formData.taxType}
-                      onChange={handleChange('taxType')}
+                      onChange={handleSelectChange('taxType')}
                       label="Tax Type"
                       sx={{
                         borderRadius: 2,
