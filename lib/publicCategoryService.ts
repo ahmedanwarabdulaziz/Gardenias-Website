@@ -24,6 +24,7 @@ export interface PublicService {
   categoryId: string;
   sessionDurations: { duration: number; price: number }[];
   displayOrder: number;
+  isActive: boolean;
   heroImage?: string;
   galleryImages?: string[];
   bookingLink?: string;
