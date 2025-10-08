@@ -1,0 +1,473 @@
+# HEALTHCARE SYSTEM DATA REQUIREMENTS
+# ===================================
+# This file contains all data requirements for Staff, Categories, and Services
+# including field specifications, character limits, and validation rules.
+
+# =============================================================================
+# STAFF MEMBER DATA REQUIREMENTS
+# =============================================================================
+
+## BASIC INFORMATION (Required)
+- name: string
+  * Minimum: 2 characters
+  * Required: Yes
+  * Example: "Dr. Sarah Johnson"
+
+- email: string
+  * Format: Valid email address
+  * Required: Yes
+  * Example: "sarah.johnson@clinic.com"
+
+- phone: string
+  * Format: Phone number
+  * Required: Yes
+  * Example: "+1 (555) 123-4567"
+
+- title: string
+  * Minimum: 2 characters
+  * Required: Yes
+  * Example: "Licensed Physical Therapist"
+
+- shortDescription: string
+  * Minimum: 10 characters
+  * Required: Yes
+  * Example: "Specialized in sports rehabilitation and injury prevention"
+
+## PROFESSIONAL DETAILS (Optional but Recommended)
+- shortBio: string
+  * Character Range: 220-300 characters
+  * Required: No
+  * Example: "Dr. Johnson has over 10 years of experience in physical therapy..."
+
+- fullBiography: string
+  * Character Range: 800-1200 characters
+  * Required: No
+  * Example: "Dr. Sarah Johnson is a licensed physical therapist with extensive experience..."
+
+- credentials: string
+  * Required: No
+  * Example: "DPT, OCS, CSCS"
+
+- areasOfSpecialization: string[]
+  * Required: No
+  * Format: Array of specialization tags
+  * Example: ["Sports Medicine", "Orthopedic Rehabilitation", "Manual Therapy", "Injury Prevention", "Post-Surgical Recovery"]
+  * Use Case: SEO tags, search filtering, staff matching
+
+- yearsOfExperience: string
+  * Required: No
+  * Example: "10+ years"
+
+- spokenLanguages: string[]
+  * Required: No
+  * Example: ["English", "Spanish", "French"]
+
+- education: Array of objects
+  * Structure: { institution: string, program: string, year: string }
+  * Required: No
+  * Example: [
+      { institution: "University of California", program: "Doctor of Physical Therapy", year: "2013" },
+      { institution: "Stanford University", program: "Bachelor of Science in Kinesiology", year: "2011" }
+    ]
+
+- associations: string
+  * Required: No
+  * Example: "American Physical Therapy Association, National Strength and Conditioning Association"
+
+## ADDITIONAL INFORMATION (Optional)
+- picture: string (Base64 data URL)
+  * Maximum Size: 500KB
+  * Required: No
+  * Format: Base64 encoded image
+
+- corporateName: string
+  * Required: No
+  * Example: "Johnson Physical Therapy LLC"
+
+- address: string
+  * Required: No
+  * Example: "123 Main Street, City, State 12345"
+
+- isActive: boolean
+  * Default: true
+  * Required: Yes
+
+# =============================================================================
+# CATEGORY DATA REQUIREMENTS
+# =============================================================================
+
+## BASIC INFORMATION (Required)
+- name: string
+  * Minimum: 2 characters
+  * Required: Yes
+  * Example: "Physical Therapy"
+
+- shortDescription: string
+  * Character Range: 10-200 characters
+  * Required: Yes
+  * Example: "Comprehensive physical therapy services for injury recovery and prevention"
+
+- fullDescription: string
+  * Minimum: 50 characters
+  * Required: Yes
+  * Example: "Our physical therapy services focus on helping patients recover from injuries..."
+
+- slug: string
+  * Required: Yes
+  * Format: URL-friendly (lowercase, hyphens)
+  * Example: "physical-therapy"
+
+- isActive: boolean
+  * Default: true
+  * Required: Yes
+
+## VISUAL & DESIGN (Optional)
+- icon: string (Base64 data URL)
+  * Maximum Size: 300KB
+  * Required: No
+  * Format: Base64 encoded image
+
+- cardBanner: string (Base64 data URL)
+  * Maximum Size: 400KB
+  * Required: No
+  * Format: Base64 encoded image
+
+- coverImage: string (Base64 data URL)
+  * Maximum Size: 500KB
+  * Required: No
+  * Format: Base64 encoded image
+
+- accentColor: string
+  * Default: "#008d80"
+  * Format: Hex color code
+  * Example: "#008d80"
+
+- displayOrder: number
+  * Required: Yes
+  * Example: 1
+
+## SEO & META (Optional)
+- seoTitle: string
+  * Maximum: 60 characters
+  * Required: No
+  * Example: "Physical Therapy Services | Gardenias Healthcare"
+
+- seoDescription: string
+  * Maximum: 160 characters
+  * Required: No
+  * Example: "Professional physical therapy services for injury recovery and prevention"
+
+- notes: string
+  * Required: No
+  * Example: "Admin notes about this category"
+
+# =============================================================================
+# SERVICE DATA REQUIREMENTS
+# =============================================================================
+
+## BASIC INFORMATION (Required)
+- name: string
+  * Required: Yes
+  * Example: "Initial Physical Therapy Assessment"
+
+- shortDescription: string
+  * Maximum: 300 characters
+  * Required: Yes
+  * Example: "Comprehensive evaluation of your condition and development of a personalized treatment plan"
+
+- fullDescription: string
+  * Maximum: 1200 characters
+  * Required: Yes
+  * Example: "Our initial physical therapy assessment includes a thorough evaluation..."
+
+- categoryId: string
+  * Required: Yes
+  * Format: Category ID reference
+  * Example: "cat_123456"
+
+- slug: string
+  * Required: Yes
+  * Format: URL-friendly (lowercase, hyphens)
+  * Example: "initial-physical-therapy-assessment"
+
+- isActive: boolean
+  * Default: true
+  * Required: Yes
+
+## SESSION & PRICING (Required)
+- sessionDurations: Array of objects
+  * Structure: { duration: number, price: number }
+  * Required: Yes
+  * Example: [
+      { duration: 30, price: 75 },
+      { duration: 60, price: 120 },
+      { duration: 90, price: 150 }
+    ]
+
+- taxType: string
+  * Options: "taxable" | "non-taxable"
+  * Required: Yes
+  * Example: "taxable"
+
+- bufferTime: number (Optional)
+  * Unit: minutes
+  * Example: 15
+
+- packageOptions: Array of objects (Optional)
+  * Structure: { title: string, sessions: number, price: number }
+  * Example: [
+      { title: "4-Session Package", sessions: 4, price: 400 },
+      { title: "8-Session Package", sessions: 8, price: 720 }
+    ]
+
+- specialOffer: string (Optional)
+  * Example: "20% off first visit"
+
+## AUDIENCE & TREATMENT DETAILS (Required)
+- whoItsFor: string[]
+  * Required: Yes
+  * Example: ["Athletes", "Post-surgical patients", "Chronic pain sufferers"]
+
+- commonConditions: string[]
+  * Required: Yes
+  * Example: ["Back pain", "Knee injuries", "Sports injuries", "Arthritis"]
+
+- expectedBenefits: string[]
+  * Required: Yes
+  * Example: ["Pain reduction", "Improved mobility", "Faster recovery", "Injury prevention"]
+
+- contraindications: string[]
+  * Required: Yes
+  * Example: ["Acute fractures", "Severe osteoporosis", "Active infections"]
+
+- whenToSeeDoctor: string (Optional)
+  * Example: "If pain worsens or persists beyond 2 weeks"
+
+## SESSION EXPERIENCE (Required)
+- firstVisitOverview: string
+  * Required: Yes
+  * Example: "Your first visit will include a comprehensive evaluation..."
+
+- whatToWear: string[]
+  * Required: Yes
+  * Example: ["Comfortable clothing", "Athletic shoes", "Loose-fitting pants"]
+
+- aftercareAdvice: string[]
+  * Required: Yes
+  * Example: ["Apply ice for 15 minutes", "Rest for 24 hours", "Follow prescribed exercises"]
+
+## VISUALS & MEDIA (Optional)
+- heroImage: string (Base64 data URL)
+  * Maximum Size: 500KB
+  * Required: No
+  * Format: Base64 encoded image
+
+- galleryImages: string[] (Base64 data URLs)
+  * Maximum Size: 400KB each
+  * Maximum Count: 10 images
+  * Required: No
+  * Format: Array of Base64 encoded images
+
+- icon: string (Base64 data URL)
+  * Maximum Size: 300KB
+  * Required: No
+  * Format: Base64 encoded image
+
+- videoLink: string (Optional)
+  * Format: YouTube/Vimeo URL
+  * Example: "https://www.youtube.com/watch?v=example"
+
+## STAFF & AVAILABILITY (Required)
+- practitioners: string[]
+  * Required: Yes
+  * Format: Array of Staff IDs
+  * Example: ["staff_123", "staff_456"]
+
+## BOOKING & INTEGRATION (Optional)
+- bookingLink: string
+  * Format: URL
+  * Example: "https://booking.example.com/service/123"
+
+- preBookingNote: string
+  * Example: "Please arrive 10 minutes early for your appointment"
+
+- postBookingInstructions: string
+  * Example: "You will receive a confirmation email with preparation instructions"
+
+## SEO & META (Optional)
+- seoTitle: string
+  * Maximum: 60 characters
+  * Example: "Physical Therapy Assessment | Gardenias Healthcare"
+
+- seoDescription: string
+  * Maximum: 150 characters
+  * Example: "Professional physical therapy assessment and treatment planning"
+
+- keywords: string[]
+  * Example: ["physical therapy", "assessment", "injury recovery", "pain management"]
+
+## INTERNAL & COMPLIANCE (Required)
+- insuranceCoverage: boolean
+  * Required: Yes
+  * Example: true
+
+- insuranceNotes: string (Optional)
+  * Example: "Covered by most major insurance plans"
+
+- directBilling: boolean
+  * Required: Yes
+  * Example: true
+
+- cancellationPolicy: string (Optional)
+  * Example: "24-hour cancellation notice required"
+
+- internalNotes: string (Optional)
+  * Example: "Admin notes about this service"
+
+# =============================================================================
+# IMAGE REQUIREMENTS & LIMITS
+# =============================================================================
+
+## IMAGE SIZE LIMITS
+- Hero Images: Maximum 1MB (1000KB)
+- Gallery Images: Maximum 400KB each
+- Icons: Maximum 300KB
+- Staff Pictures: Maximum 500KB
+- Category Icons: Maximum 300KB
+- Category Banners: Maximum 400KB
+- Category Cover Images: Maximum 500KB
+
+## IMAGE FORMATS
+- Supported: JPEG, PNG, WebP
+- Recommended: JPEG for photos, PNG for graphics
+- Base64 encoding required for storage
+
+## COMPRESSION
+- Automatic compression applied
+- Quality settings: 0.6 (primary), 0.4 (secondary)
+- Images compressed if exceeding size limits
+
+# =============================================================================
+# VALIDATION RULES SUMMARY
+# =============================================================================
+
+## REQUIRED FIELDS
+### Staff:
+- name, email, phone, title, shortDescription
+
+### Categories:
+- name, shortDescription, fullDescription, slug
+
+### Services:
+- name, shortDescription, fullDescription, categoryId, slug, sessionDurations, 
+  taxType, whoItsFor, commonConditions, expectedBenefits, contraindications,
+  firstVisitOverview, whatToWear, aftercareAdvice, practitioners, 
+  insuranceCoverage, directBilling
+
+## CHARACTER LIMITS
+- Service shortDescription: 300 characters
+- Service fullDescription: 1200 characters
+- Staff shortBio: 220-300 characters
+- Staff fullBiography: 800-1200 characters
+- Category shortDescription: 10-200 characters
+- Category fullDescription: 50+ characters
+- SEO titles: 60 characters
+- SEO descriptions: 150-160 characters
+
+## ARRAY LIMITS
+- Gallery images: Maximum 10
+- Session durations: No limit (but practical limit of 10)
+- Package options: No limit (but practical limit of 5)
+- Keywords: No limit (but practical limit of 20)
+- Spoken languages: No limit (but practical limit of 10)
+
+# =============================================================================
+# DATA IMPORT/EXPORT FORMATS
+# =============================================================================
+
+## JSON STRUCTURE EXAMPLE
+```json
+{
+  "staff": [
+    {
+      "name": "Dr. Sarah Johnson",
+      "email": "sarah.johnson@clinic.com",
+      "phone": "+1 (555) 123-4567",
+      "title": "Licensed Physical Therapist",
+      "shortDescription": "Specialized in sports rehabilitation",
+      "shortBio": "Dr. Johnson has over 10 years of experience...",
+      "fullBiography": "Dr. Sarah Johnson is a licensed physical therapist...",
+      "credentials": "DPT, OCS, CSCS",
+      "areasOfSpecialization": ["Sports Medicine", "Orthopedic Rehabilitation", "Manual Therapy", "Injury Prevention"],
+      "yearsOfExperience": "10+ years",
+      "spokenLanguages": ["English", "Spanish"],
+      "education": [
+        {
+          "institution": "University of California",
+          "program": "Doctor of Physical Therapy",
+          "year": "2013"
+        }
+      ],
+      "associations": "American Physical Therapy Association",
+      "isActive": true
+    }
+  ],
+  "categories": [
+    {
+      "name": "Physical Therapy",
+      "shortDescription": "Comprehensive physical therapy services",
+      "fullDescription": "Our physical therapy services focus on helping patients...",
+      "slug": "physical-therapy",
+      "accentColor": "#008d80",
+      "displayOrder": 1,
+      "seoTitle": "Physical Therapy Services | Gardenias Healthcare",
+      "seoDescription": "Professional physical therapy services for injury recovery",
+      "isActive": true
+    }
+  ],
+  "services": [
+    {
+      "name": "Initial Physical Therapy Assessment",
+      "shortDescription": "Comprehensive evaluation of your condition",
+      "fullDescription": "Our initial physical therapy assessment includes...",
+      "categoryId": "cat_123456",
+      "slug": "initial-physical-therapy-assessment",
+      "sessionDurations": [
+        { "duration": 30, "price": 75 },
+        { "duration": 60, "price": 120 }
+      ],
+      "taxType": "taxable",
+      "whoItsFor": ["Athletes", "Post-surgical patients"],
+      "commonConditions": ["Back pain", "Knee injuries"],
+      "expectedBenefits": ["Pain reduction", "Improved mobility"],
+      "contraindications": ["Acute fractures", "Severe osteoporosis"],
+      "firstVisitOverview": "Your first visit will include...",
+      "whatToWear": ["Comfortable clothing", "Athletic shoes"],
+      "aftercareAdvice": ["Apply ice for 15 minutes", "Rest for 24 hours"],
+      "practitioners": ["staff_123", "staff_456"],
+      "insuranceCoverage": true,
+      "directBilling": true,
+      "isActive": true
+    }
+  ]
+}
+```
+
+# =============================================================================
+# NOTES FOR EXTERNAL DATA PREPARATION
+# =============================================================================
+
+1. **Image Preparation**: Convert all images to Base64 format before import
+2. **Slug Generation**: Create URL-friendly slugs (lowercase, hyphens, no spaces)
+3. **Character Limits**: Ensure all text fields meet minimum/maximum requirements
+4. **Required Fields**: All required fields must have values
+5. **Array Fields**: Use arrays for multi-value fields (languages, conditions, etc.)
+6. **Boolean Fields**: Use true/false for boolean values
+7. **Date Fields**: Use ISO date format (YYYY-MM-DDTHH:mm:ss.sssZ)
+8. **ID References**: Use actual IDs when referencing other entities
+9. **Validation**: Test all data against the character limits and requirements
+10. **Image Compression**: Ensure images are within size limits before encoding
+
+# =============================================================================
+# END OF DATA REQUIREMENTS
+# =============================================================================

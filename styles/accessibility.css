@@ -1,0 +1,31 @@
+/* Fix for aria-hidden accessibility issues */
+.MuiDialog-root {
+  /* Ensure dialogs don't have aria-hidden conflicts */
+  &[aria-hidden="true"] {
+    /* Remove aria-hidden from focused elements */
+    *:focus {
+      outline: 2px solid #008d80;
+      outline-offset: 2px;
+    }
+  }
+}
+
+/* Ensure proper focus management in dialogs */
+.MuiDialog-paper {
+  /* Prevent focus from being trapped incorrectly */
+  &:focus-within {
+    outline: none;
+  }
+}
+
+/* Fix for Material-UI button focus issues */
+.MuiButtonBase-root:focus-visible {
+  outline: 2px solid #008d80;
+  outline-offset: 2px;
+}
+
+/* Ensure proper focus indicators */
+.MuiIconButton-root:focus-visible {
+  outline: 2px solid #008d80;
+  outline-offset: 2px;
+}
