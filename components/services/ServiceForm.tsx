@@ -24,7 +24,6 @@ import {
   Checkbox,
   Divider,
 } from '@mui/material';
-import Grid2 from '@mui/material/Grid2';
 import {
   PhotoCamera as PhotoCameraIcon,
   Save as SaveIcon,
@@ -2171,8 +2170,8 @@ export default function ServiceForm({ service, onSave, onCancel, categories, sta
                   </Box>
                 </Box>
 
-                <Grid2 container spacing={3}>
-                <Grid2 size={{ xs: 12, md: 6 }}>
+                <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, gap: 3 }}>
+                <Box sx={{ flex: 1 }}>
                   <FormControlLabel
                     control={
                       <Switch
@@ -2194,9 +2193,9 @@ export default function ServiceForm({ service, onSave, onCancel, categories, sta
                     }
                     sx={{ alignItems: 'flex-start', mt: 1 }}
                   />
-                </Grid2>
+                </Box>
 
-                <Grid2 size={{ xs: 12, md: 6 }}>
+                <Box sx={{ flex: 1 }}>
                   <FormControlLabel
                     control={
                       <Switch
@@ -2218,9 +2217,9 @@ export default function ServiceForm({ service, onSave, onCancel, categories, sta
                     }
                     sx={{ alignItems: 'flex-start', mt: 1 }}
                   />
-                </Grid2>
+                </Box>
 
-                <Grid2 size={{ xs: 12 }}>
+                <Box sx={{ width: '100%' }}>
                   <TextField
                     fullWidth
                     multiline
@@ -2243,9 +2242,9 @@ export default function ServiceForm({ service, onSave, onCancel, categories, sta
                       },
                     }}
                   />
-                </Grid2>
+                </Box>
 
-                <Grid2 size={{ xs: 12 }}>
+                <Box sx={{ width: '100%' }}>
                   <TextField
                     fullWidth
                     multiline
@@ -2268,9 +2267,9 @@ export default function ServiceForm({ service, onSave, onCancel, categories, sta
                       },
                     }}
                   />
-                </Grid2>
+                </Box>
 
-                <Grid2 size={{ xs: 12 }}>
+                <Box sx={{ width: '100%' }}>
                   <TextField
                     fullWidth
                     multiline
@@ -2300,8 +2299,8 @@ export default function ServiceForm({ service, onSave, onCancel, categories, sta
                       },
                     }}
                   />
-                </Grid2>
-              </Grid2>
+                </Box>
+              </Box>
               </Paper>
             </Box>
           </TabPanel>
