@@ -41,7 +41,7 @@ export const trackPageView = (page: string) => {
 };
 
 // Upload image to Cloudflare Images (simplified for development)
-export const uploadImageToCloudflare = async (file: File | Blob, filename?: string): Promise<string> => {
+export const uploadImageToCloudflare = async (file: File | Blob, _filename?: string): Promise<string> => {
   try {
     // For development, we'll use a placeholder approach
     // In production, you would need proper Cloudflare API credentials
@@ -65,7 +65,7 @@ export const uploadImageToCloudflare = async (file: File | Blob, filename?: stri
 };
 
 // Upload image from data URL to Cloudflare (simplified for development)
-export const uploadDataUrlToCloudflare = async (dataUrl: string, filename?: string): Promise<string> => {
+export const uploadDataUrlToCloudflare = async (dataUrl: string, _filename?: string): Promise<string> => {
   try {
     // For development, we'll return the data URL directly
     // In production, you would upload to Cloudflare Images API

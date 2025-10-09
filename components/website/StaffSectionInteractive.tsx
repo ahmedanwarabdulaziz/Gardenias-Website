@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Box, Container, Typography, Avatar, Chip, CircularProgress, Paper } from '@mui/material';
+import { Box, Container, Typography, Chip, CircularProgress, Paper } from '@mui/material';
 import { Star, Globe, X, ArrowRight } from 'phosphor-react';
 import { PublicStaffService, PublicStaffMember } from '@/lib/publicStaffService';
 import Link from 'next/link';

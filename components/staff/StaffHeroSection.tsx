@@ -1,7 +1,7 @@
 'use client';
 
 import { Box, Container, Typography, Chip, Breadcrumbs, Link, Button } from '@mui/material';
-import { House, CaretRight, Calendar, EnvelopeSimple, Phone } from 'phosphor-react';
+import { House, CaretRight, Calendar } from 'phosphor-react';
 
 interface StaffHeroSectionProps {
   name: string;
@@ -21,13 +21,10 @@ export default function StaffHeroSection({
   name,
   title,
   credentials,
-  picture,
   heroImage,
   shortBio,
   yearsOfExperience,
   spokenLanguages,
-  email,
-  phone,
   bookingLink,
 }: StaffHeroSectionProps) {
   return (

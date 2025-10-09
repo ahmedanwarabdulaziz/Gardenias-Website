@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Box, Container, Typography, Grid, Card, CardContent, Chip, CircularProgress } from '@mui/material';
+import { Box, Container, Typography, Card, CardContent, Chip, CircularProgress } from '@mui/material';
 import Link from 'next/link';
 import { FirstAid, Heart, Activity, Brain, Baby, Barbell } from 'phosphor-react';
 import { PublicCategoryService, PublicCategory, PublicService } from '@/lib/publicCategoryService';
@@ -48,7 +48,7 @@ export default function ServicesSection() {
     };
 
     fetchData();
-  }, []);
+  }, [selectedCategory]);
 
   const filteredServices = services.filter(service => service.categoryId === selectedCategory);
   const currentCategory = categories.find(c => c.id === selectedCategory);
@@ -334,12 +334,7 @@ export default function ServicesSection() {
             }}
           >
             {filteredServices.length > 0 ? (
-              filteredServices.map((service, index) => {
-                const firstDuration = service.sessionDurations?.[0];
-                const durationLabel = firstDuration 
-                  ? `${firstDuration.duration} min` 
-                  : undefined;
-
+              filteredServices.map((service) => {
                 // Get the first gallery image or hero image
                 const bannerImage = service.galleryImages?.[0] || service.heroImage;
 
