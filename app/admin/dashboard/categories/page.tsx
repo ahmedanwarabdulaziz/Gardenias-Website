@@ -5,7 +5,6 @@ import { CategoryService, Category } from '@/lib/categoryService';
 import {
   Box,
   Container,
-  Typography,
   Button,
   Card,
   CardContent,
@@ -19,20 +18,15 @@ import {
   Snackbar,
   Alert,
   IconButton,
-  Grid,
 } from '@mui/material';
 import {
   Edit as EditIcon,
   Delete as DeleteIcon,
-  Visibility as ViewIcon,
   DragIndicator as DragIcon,
   Add as AddIcon,
   ToggleOn as ToggleOnIcon,
   ToggleOff as ToggleOffIcon,
   Category as CategoryIcon,
-  Description as DescriptionIcon,
-  Palette as PaletteIcon,
-  Image as ImageIcon,
 } from '@mui/icons-material';
 import {
   DndContext,
@@ -64,7 +58,6 @@ interface SortableCategoryCardProps {
 
 function SortableCategoryCard({ category, onEdit, onDelete, onToggleActive }: SortableCategoryCardProps) {
   const {
-    attributes,
     listeners,
     setNodeRef,
     transform,

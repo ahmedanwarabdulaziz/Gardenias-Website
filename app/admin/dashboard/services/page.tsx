@@ -12,10 +12,7 @@ import { CSS } from '@dnd-kit/utilities';
 import {
   Box,
   Container,
-  Typography,
   Button,
-  Card,
-  CardContent,
   Avatar,
   Chip,
   Dialog,
@@ -26,7 +23,6 @@ import {
   Snackbar,
   Alert,
   IconButton,
-  Grid,
   Table,
   TableBody,
   TableCell,
@@ -34,8 +30,6 @@ import {
   TableHead,
   TableRow,
   Paper,
-  TableSortLabel,
-  Collapse,
 } from '@mui/material';
 import {
   Edit as EditIcon,
@@ -44,9 +38,6 @@ import {
   ToggleOn as ToggleOnIcon,
   ToggleOff as ToggleOffIcon,
   Category as CategoryIcon,
-  AttachMoney as MoneyIcon,
-  People as PeopleIcon,
-  Visibility as VisibilityIcon,
   DragIndicator as DragIcon,
   ExpandMore as ExpandMoreIcon,
   ExpandLess as ExpandLessIcon,
