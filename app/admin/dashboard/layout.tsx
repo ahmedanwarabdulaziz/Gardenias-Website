@@ -27,6 +27,7 @@ import {
   Analytics as AnalyticsIcon,
   Settings as SettingsIcon,
   ExitToApp as LogoutIcon,
+  Share as ShareIcon,
 } from '@mui/icons-material';
 import Link from 'next/link';
 import ProtectedRoute from '@/components/admin/ProtectedRoute';
@@ -39,6 +40,7 @@ const menuItems = [
   { text: 'Staff', icon: <PeopleIcon />, href: '/admin/dashboard/staff' },
   { text: 'Categories', icon: <CategoryIcon />, href: '/admin/dashboard/categories' },
   { text: 'Services', icon: <ServiceIcon />, href: '/admin/dashboard/services' },
+  { text: 'Social Media', icon: <ShareIcon />, href: '/admin/dashboard/social-media' },
   { text: 'Appointments', icon: <CalendarIcon />, href: '/admin/dashboard/appointments' },
   { text: 'Analytics', icon: <AnalyticsIcon />, href: '/admin/dashboard/analytics' },
   { text: 'Settings', icon: <SettingsIcon />, href: '/admin/dashboard/settings' },

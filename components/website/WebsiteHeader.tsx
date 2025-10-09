@@ -21,33 +21,41 @@ import { List as MenuIcon, Phone, CaretDown } from 'phosphor-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { PublicCategoryService, PublicCategory, PublicService } from '@/lib/publicCategoryService';
+import { PublicStaffService, PublicStaffMember } from '@/lib/publicStaffService';
 
 const navigationItems = [
   { label: 'Home', href: '/' },
   { label: 'About Us', href: '/about' },
-  { label: 'Services', href: '/services', hasDropdown: true },
-  { label: 'Doctors', href: '/doctors' },
+  { label: 'Services', href: '/services', hasDropdown: true, type: 'services' },
+  { label: 'Staff', href: '/staff', hasDropdown: true, type: 'staff' },
   { label: 'Contact', href: '/contact' },
 ];
 
 export default function WebsiteHeader() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [servicesMenuOpen, setServicesMenuOpen] = useState(false);
+  const [staffMenuOpen, setStaffMenuOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
+  const [mobileStaffOpen, setMobileStaffOpen] = useState(false);
   const [categories, setCategories] = useState<PublicCategory[]>([]);
   const [services, setServices] = useState<PublicService[]>([]);
+  const [staff, setStaff] = useState<PublicStaffMember[]>([]);
+  const [mounted, setMounted] = useState(false);
   
   useEffect(() => {
+    setMounted(true);
     const fetchData = async () => {
       try {
-        const [categoriesData, servicesData] = await Promise.all([
+        const [categoriesData, servicesData, staffData] = await Promise.all([
           PublicCategoryService.getPublicCategories(),
-          PublicCategoryService.getPublicServices()
+          PublicCategoryService.getPublicServices(),
+          PublicStaffService.getPublicStaff()
         ]);
         setCategories(categoriesData);
         setServices(servicesData);
+        setStaff(staffData);
       } catch (error) {
-        console.error('Error fetching categories and services:', error);
+        console.error('Error fetching data:', error);
       }
     };
 
@@ -57,6 +65,61 @@ export default function WebsiteHeader() {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+
+  // Prevent hydration mismatch by not rendering dynamic content on server
+  if (!mounted) {
+    return (
+      <AppBar 
+        position="sticky" 
+        elevation={0}
+        sx={{ 
+          background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.7) 100%)',
+          backdropFilter: 'blur(20px) saturate(180%)',
+          borderBottom: '1px solid rgba(255, 255, 255, 0.3)',
+          boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.15)',
+          '&::before': {
+            content: '""',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            height: '1px',
+            background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent)',
+          }
+        }}
+      >
+        <Container maxWidth="lg">
+          <Toolbar 
+            sx={{ 
+              px: 0,
+              py: { xs: 0, md: 0.5 }, 
+              minHeight: { xs: 56, md: 64 },
+              justifyContent: 'center',
+            }}
+          >
+            <Box sx={{ display: 'flex', alignItems: 'center', overflow: 'visible' }}>
+              <Link href="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
+                <Box sx={{ 
+                  width: { xs: 280, sm: 380, md: 480 }, 
+                  height: { xs: 70, sm: 95, md: 120 },
+                  position: 'relative',
+                  my: -1,
+                }}>
+                  <Image
+                    src="/images/logo.png"
+                    alt="Gardenias Healthcare Clinic"
+                    fill
+                    priority
+                    style={{ objectFit: 'contain' }}
+                  />
+                </Box>
+              </Link>
+            </Box>
+          </Toolbar>
+        </Container>
+      </AppBar>
+    );
+  }
 
   const drawer = (
     <Box sx={{ textAlign: 'center', py: 1 }}>
@@ -75,7 +138,13 @@ export default function WebsiteHeader() {
             <ListItem disablePadding>
               {item.hasDropdown ? (
                 <ListItemButton 
-                  onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
+                  onClick={() => {
+                    if (item.type === 'services') {
+                      setMobileServicesOpen(!mobileServicesOpen);
+                    } else if (item.type === 'staff') {
+                      setMobileStaffOpen(!mobileStaffOpen);
+                    }
+                  }}
                   sx={{ 
                     py: 1.5,
                     '&:hover': { 
@@ -95,7 +164,7 @@ export default function WebsiteHeader() {
                     size={16} 
                     weight="bold" 
                     style={{ 
-                      transform: mobileServicesOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+                      transform: (item.type === 'services' && mobileServicesOpen) || (item.type === 'staff' && mobileStaffOpen) ? 'rotate(180deg)' : 'rotate(0deg)',
                       transition: 'transform 0.3s ease'
                     }} 
                   />
@@ -125,7 +194,7 @@ export default function WebsiteHeader() {
             </ListItem>
             
             {/* Services Submenu */}
-            {item.hasDropdown && mobileServicesOpen && (
+            {item.hasDropdown && item.type === 'services' && mobileServicesOpen && (
               <Box sx={{ bgcolor: '#f5f5f5', pl: 2 }}>
                 {categories.map((category) => {
                   const categoryServices = services.filter(s => s.categoryId === category.id);
@@ -171,6 +240,43 @@ export default function WebsiteHeader() {
                     </Box>
                   ) : null;
                 })}
+              </Box>
+            )}
+
+            {/* Staff Submenu */}
+            {item.hasDropdown && item.type === 'staff' && mobileStaffOpen && (
+              <Box sx={{ bgcolor: '#f5f5f5', pl: 2 }}>
+                {staff.map((member) => (
+                  <ListItemButton
+                    key={member.id}
+                    component={Link}
+                    href={`/staff/${member.slug || member.id}`}
+                    onClick={handleDrawerToggle}
+                    sx={{
+                      py: 1.5,
+                      pl: 3,
+                      '&:hover': {
+                        bgcolor: 'rgba(0, 141, 128, 0.08)',
+                      },
+                    }}
+                  >
+                    <ListItemText
+                      primary={member.name}
+                      secondary={member.title}
+                      primaryTypographyProps={{
+                        fontFamily: '"Source Sans Pro", sans-serif',
+                        fontSize: '0.95rem',
+                        fontWeight: 600,
+                        color: '#333',
+                      }}
+                      secondaryTypographyProps={{
+                        fontFamily: '"Source Sans Pro", sans-serif',
+                        fontSize: '0.8rem',
+                        color: '#666',
+                      }}
+                    />
+                  </ListItemButton>
+                ))}
               </Box>
             )}
           </Box>
@@ -253,8 +359,33 @@ export default function WebsiteHeader() {
               {navigationItems.map((item) => (
                 <Box
                   key={item.label}
-                  onMouseEnter={() => item.hasDropdown && setServicesMenuOpen(true)}
-                  onMouseLeave={() => item.hasDropdown && setServicesMenuOpen(false)}
+                  onMouseEnter={() => {
+                    if (item.hasDropdown) {
+                      if (item.type === 'services') {
+                        setServicesMenuOpen(true);
+                      } else if (item.type === 'staff') {
+                        setStaffMenuOpen(true);
+                      }
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (item.hasDropdown) {
+                      // Check if mouse is moving to the dropdown menu
+                      const relatedTarget = e.relatedTarget as HTMLElement;
+                      if (relatedTarget && relatedTarget.closest('[data-dropdown-menu]')) {
+                        return; // Don't close if moving to dropdown
+                      }
+                      
+                      // Add a small delay to allow moving to dropdown
+                      setTimeout(() => {
+                        if (item.type === 'services') {
+                          setServicesMenuOpen(false);
+                        } else if (item.type === 'staff') {
+                          setStaffMenuOpen(false);
+                        }
+                      }, 150);
+                    }
+                  }}
                   sx={{ position: 'relative' }}
                 >
                   <Button
@@ -281,14 +412,17 @@ export default function WebsiteHeader() {
                   </Button>
 
                   {/* Services Mega Menu Dropdown */}
-                  {item.hasDropdown && servicesMenuOpen && categories.length > 0 && (
+                  {item.hasDropdown && item.type === 'services' && servicesMenuOpen && categories.length > 0 && (
                     <Paper
+                      data-dropdown-menu="true"
+                      onMouseEnter={() => setServicesMenuOpen(true)}
+                      onMouseLeave={() => setServicesMenuOpen(false)}
                       sx={{
                         position: 'absolute',
                         top: '100%',
                         left: '50%',
                         transform: 'translateX(-50%)',
-                        mt: 1,
+                        mt: 0.5,
                         width: '800px',
                         maxWidth: '90vw',
                         maxHeight: '80vh',
@@ -455,6 +589,163 @@ export default function WebsiteHeader() {
                               }}
                             >
                               View All Services
+                            </Typography>
+                            <Box sx={{ fontSize: '1.2rem', color: '#008d80' }}>→</Box>
+                          </Box>
+                        </Link>
+                      </Box>
+                    </Paper>
+                  )}
+
+                  {/* Staff Dropdown Menu */}
+                  {item.hasDropdown && item.type === 'staff' && staffMenuOpen && staff.length > 0 && (
+                    <Paper
+                      data-dropdown-menu="true"
+                      onMouseEnter={() => setStaffMenuOpen(true)}
+                      onMouseLeave={() => setStaffMenuOpen(false)}
+                      sx={{
+                        position: 'absolute',
+                        top: '100%',
+                        left: '50%',
+                        transform: 'translateX(-50%)',
+                        mt: 0.5,
+                        width: '400px',
+                        maxWidth: '90vw',
+                        maxHeight: '80vh',
+                        overflowY: 'auto',
+                        boxShadow: '0 16px 48px rgba(0,0,0,0.2)',
+                        borderRadius: '16px',
+                        border: '2px solid #008d8020',
+                        zIndex: 1300,
+                        animation: 'slideDown 0.3s ease-out',
+                        '@keyframes slideDown': {
+                          from: {
+                            opacity: 0,
+                            transform: 'translateX(-50%) translateY(-10px)',
+                          },
+                          to: {
+                            opacity: 1,
+                            transform: 'translateX(-50%) translateY(0)',
+                          },
+                        },
+                      }}
+                    >
+                      <Box sx={{ p: 3 }}>
+                        {/* Header */}
+                        <Typography
+                          sx={{
+                            fontFamily: '"Playfair Display", serif',
+                            fontSize: '1.5rem',
+                            fontWeight: 700,
+                            color: '#008d80',
+                            mb: 3,
+                          }}
+                        >
+                          Meet Our Team
+                        </Typography>
+
+                        {/* Staff List */}
+                        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
+                          {staff.map((member) => (
+                            <Link
+                              key={member.id}
+                              href={`/staff/${member.slug || member.id}`}
+                              style={{ textDecoration: 'none' }}
+                            >
+                              <Box
+                                sx={{
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  gap: 2,
+                                  px: 2,
+                                  py: 2,
+                                  borderRadius: '12px',
+                                  transition: 'all 0.2s ease',
+                                  '&:hover': {
+                                    bgcolor: '#008d8010',
+                                    transform: 'translateX(4px)',
+                                  },
+                                }}
+                              >
+                                <Box
+                                  sx={{
+                                    width: 48,
+                                    height: 48,
+                                    borderRadius: '50%',
+                                    bgcolor: '#008d80',
+                                    color: 'white',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    fontFamily: '"Source Sans Pro", sans-serif',
+                                    fontWeight: 700,
+                                    fontSize: '1.2rem',
+                                    flexShrink: 0,
+                                    backgroundImage: member.picture ? `url(${member.picture})` : 'none',
+                                    backgroundSize: 'cover',
+                                    backgroundPosition: 'center',
+                                  }}
+                                >
+                                  {!member.picture && member.name.charAt(0).toUpperCase()}
+                                </Box>
+                                <Box sx={{ flex: 1, minWidth: 0 }}>
+                                  <Typography
+                                    sx={{
+                                      fontFamily: '"Source Sans Pro", sans-serif',
+                                      fontSize: '1rem',
+                                      fontWeight: 600,
+                                      color: '#333',
+                                      overflow: 'hidden',
+                                      textOverflow: 'ellipsis',
+                                      whiteSpace: 'nowrap',
+                                    }}
+                                  >
+                                    {member.name}
+                                  </Typography>
+                                  <Typography
+                                    sx={{
+                                      fontFamily: '"Source Sans Pro", sans-serif',
+                                      fontSize: '0.85rem',
+                                      color: '#666',
+                                      overflow: 'hidden',
+                                      textOverflow: 'ellipsis',
+                                      whiteSpace: 'nowrap',
+                                    }}
+                                  >
+                                    {member.title}
+                                  </Typography>
+                                </Box>
+                              </Box>
+                            </Link>
+                          ))}
+                        </Box>
+
+                        {/* View All Staff Link */}
+                        <Divider sx={{ my: 3 }} />
+                        <Link href="/staff" style={{ textDecoration: 'none' }}>
+                          <Box
+                            sx={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              gap: 1,
+                              py: 2,
+                              borderRadius: '8px',
+                              transition: 'all 0.3s ease',
+                              '&:hover': {
+                                bgcolor: '#008d8010',
+                              },
+                            }}
+                          >
+                            <Typography
+                              sx={{
+                                fontFamily: '"Source Sans Pro", sans-serif',
+                                fontSize: '1rem',
+                                fontWeight: 700,
+                                color: '#008d80',
+                              }}
+                            >
+                              View All Staff
                             </Typography>
                             <Box sx={{ fontSize: '1.2rem', color: '#008d80' }}>→</Box>
                           </Box>

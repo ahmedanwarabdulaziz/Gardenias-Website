@@ -196,5 +196,50 @@ export class PublicCategoryService {
       return null;
     }
   }
+
+  // Get services by staff member ID
+  static async getServicesByStaffId(staffId: string): Promise<PublicService[]> {
+    try {
+      const servicesRef = collection(db, 'services');
+      const q = query(servicesRef, orderBy('displayOrder', 'asc'));
+      const querySnapshot = await getDocs(q);
+
+      const services = querySnapshot.docs
+        .map(doc => ({
+          id: doc.id,
+          name: doc.data().name,
+          shortDescription: doc.data().shortDescription,
+          fullDescription: doc.data().fullDescription,
+          categoryId: doc.data().categoryId,
+          sessionDurations: doc.data().sessionDurations || [],
+          isActive: doc.data().isActive,
+          displayOrder: doc.data().displayOrder ?? 0,
+          heroImage: doc.data().heroImage,
+          galleryImages: doc.data().galleryImages || [],
+          bookingLink: doc.data().bookingLink,
+          slug: doc.data().slug,
+          whoItsFor: doc.data().whoItsFor || [],
+          commonConditions: doc.data().commonConditions || [],
+          expectedBenefits: doc.data().expectedBenefits || [],
+          contraindications: doc.data().contraindications || [],
+          whenToSeeDoctor: doc.data().whenToSeeDoctor,
+          firstVisitOverview: doc.data().firstVisitOverview,
+          whatToWear: doc.data().whatToWear || [],
+          aftercareAdvice: doc.data().aftercareAdvice || [],
+          preBookingNote: doc.data().preBookingNote,
+          postBookingInstructions: doc.data().postBookingInstructions,
+          practitioners: doc.data().practitioners || [],
+        }))
+        .filter(service => {
+          // Filter by active status and check if staff ID is in practitioners array
+          return service.isActive && service.practitioners && service.practitioners.includes(staffId);
+        });
+
+      return services as PublicService[];
+    } catch (error) {
+      console.error('Error fetching services by staff ID:', error);
+      return [];
+    }
+  }
 }
 

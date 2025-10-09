@@ -19,10 +19,12 @@ import AuthService from './auth';
 export interface StaffMember {
   id: string;
   name: string;
+  slug?: string;
   email: string;
   phone: string;
   title: string;
   picture?: string;
+  heroImage?: string;
   shortDescription: string;
   corporateName?: string;
   address?: string;
@@ -43,6 +45,7 @@ export interface StaffMember {
     year: string;
   }>;
   associations?: string;
+  bookingLink?: string;
 }
 
 export class StaffService {

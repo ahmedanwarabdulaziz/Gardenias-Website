@@ -2,8 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import { Box, Container, Typography, Avatar, Chip, CircularProgress, Paper } from '@mui/material';
-import { Users, Star, Globe, X } from 'phosphor-react';
+import { Star, Globe, X, ArrowRight } from 'phosphor-react';
 import { PublicStaffService, PublicStaffMember } from '@/lib/publicStaffService';
+import Link from 'next/link';
 
 export default function StaffSectionInteractive() {
   const [staff, setStaff] = useState<PublicStaffMember[]>([]);
@@ -26,6 +27,23 @@ export default function StaffSectionInteractive() {
     fetchStaff();
   }, []);
 
+  const handleStaffClick = (member: PublicStaffMember) => {
+    setSelectedStaff(member);
+    // Scroll to staff details after a short delay to allow rendering
+    setTimeout(() => {
+      const detailsElement = document.getElementById('staff-details');
+      if (detailsElement) {
+        const elementPosition = detailsElement.getBoundingClientRect().top + window.scrollY;
+        const offsetPosition = elementPosition - 100; // 100px offset from top
+        
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }
+    }, 100);
+  };
+
   if (loading) {
     return (
       <Box sx={{ py: { xs: 6, md: 10 }, bgcolor: '#f8faf9', display: 'flex', justifyContent: 'center' }}>
@@ -43,34 +61,6 @@ export default function StaffSectionInteractive() {
       <Container maxWidth="lg">
         {/* Section Header */}
         <Box sx={{ textAlign: 'center', mb: 6 }}>
-          <Box
-            sx={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: 1.5,
-              mb: 2,
-              px: 3,
-              py: 1,
-              borderRadius: '50px',
-              bgcolor: '#008d8010',
-              border: '1px solid #008d8030',
-            }}
-          >
-            <Users size={24} weight="duotone" color="#008d80" />
-            <Typography
-              sx={{
-                fontFamily: '"Source Sans Pro", sans-serif',
-                fontSize: '0.9rem',
-                fontWeight: 600,
-                color: '#008d80',
-                textTransform: 'uppercase',
-                letterSpacing: '1px',
-              }}
-            >
-              Our Team
-            </Typography>
-          </Box>
-          
           <Typography
             component="h2"
             sx={{
@@ -112,7 +102,7 @@ export default function StaffSectionInteractive() {
           {staff.map((member, index) => (
             <Paper
               key={member.id}
-              onClick={() => setSelectedStaff(member)}
+              onClick={() => handleStaffClick(member)}
               sx={{
                 cursor: 'pointer',
                 transition: 'all 0.3s ease',
@@ -215,6 +205,7 @@ export default function StaffSectionInteractive() {
         {/* Selected Staff Detail View */}
         {selectedStaff && (
           <Paper
+            id="staff-details"
             sx={{
               borderRadius: '16px',
               overflow: 'hidden',
@@ -371,7 +362,7 @@ export default function StaffSectionInteractive() {
                           fontWeight: 600,
                         }}
                       >
-                        {selectedStaff.yearsOfExperience} experience
+                        {selectedStaff.yearsOfExperience} years experience
                       </Typography>
                     </Box>
                   )}
@@ -395,7 +386,7 @@ export default function StaffSectionInteractive() {
 
                 {/* Specializations */}
                 {selectedStaff.areasOfSpecialization && selectedStaff.areasOfSpecialization.length > 0 && (
-                  <Box>
+                  <Box sx={{ mb: 4 }}>
                     <Typography
                       sx={{
                         fontFamily: '"Source Sans Pro", sans-serif',
@@ -428,6 +419,48 @@ export default function StaffSectionInteractive() {
                     </Box>
                   </Box>
                 )}
+
+                {/* Read More Link */}
+                <Link
+                  href={`/staff/${selectedStaff.slug || selectedStaff.id}`}
+                  style={{ textDecoration: 'none' }}
+                >
+                  <Box
+                    sx={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: 1.5,
+                      px: 4,
+                      py: 2,
+                      borderRadius: '50px',
+                      bgcolor: '#008d80',
+                      color: 'white',
+                      fontFamily: '"Source Sans Pro", sans-serif',
+                      fontWeight: 700,
+                      fontSize: '1rem',
+                      cursor: 'pointer',
+                      transition: 'all 0.3s ease',
+                      boxShadow: '0 4px 16px rgba(0,141,128,0.3)',
+                      '&:hover': {
+                        bgcolor: '#007067',
+                        transform: 'translateY(-2px)',
+                        boxShadow: '0 8px 24px rgba(0,141,128,0.4)',
+                      },
+                    }}
+                  >
+                    <Typography
+                      sx={{
+                        fontFamily: '"Source Sans Pro", sans-serif',
+                        fontWeight: 700,
+                        fontSize: '1rem',
+                        color: 'white',
+                      }}
+                    >
+                      Read more about {selectedStaff.name}
+                    </Typography>
+                    <ArrowRight size={20} weight="bold" color="white" />
+                  </Box>
+                </Link>
               </Box>
             </Box>
           </Paper>

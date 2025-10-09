@@ -110,6 +110,8 @@ export default function StaffSection() {
           {staff.map((member, index) => (
             <Card
               key={member.id}
+              component="a"
+              href={`/staff/${member.slug || member.id}`}
               sx={{
                 height: '100%',
                 display: 'flex',
@@ -119,6 +121,8 @@ export default function StaffSection() {
                 border: '2px solid transparent',
                 boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
                 borderRadius: '16px',
+                textDecoration: 'none',
+                cursor: 'pointer',
                 animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both`,
                 '@keyframes fadeInUp': {
                   from: {

@@ -46,6 +46,7 @@ interface StaffFormData {
   phone: string;
   title: string;
   picture?: string;
+  heroImage?: string;
   shortDescription: string;
   corporateName?: string;
   address?: string;
@@ -63,6 +64,8 @@ interface StaffFormData {
     year: string;
   }>;
   associations?: string;
+  slug?: string;
+  bookingLink?: string;
 }
 
 interface StaffFormProps {
@@ -133,6 +136,7 @@ export default function StaffFormNew({ staff, onSave, onCancel }: StaffFormProps
       phone: staff.phone || '',
       title: staff.title || '',
       picture: staff.picture || '',
+      heroImage: staff.heroImage || '',
       shortDescription: staff.shortDescription || '',
       corporateName: staff.corporateName || '',
       address: staff.address || '',
@@ -146,12 +150,15 @@ export default function StaffFormNew({ staff, onSave, onCancel }: StaffFormProps
       spokenLanguages: staff.spokenLanguages || [],
       education: staff.education || [],
       associations: staff.associations || '',
+      slug: staff.slug || '',
+      bookingLink: staff.bookingLink || '',
     } : {
       name: '',
       email: '',
       phone: '',
       title: '',
       picture: '',
+      heroImage: '',
       shortDescription: '',
       corporateName: '',
       address: '',
@@ -165,6 +172,8 @@ export default function StaffFormNew({ staff, onSave, onCancel }: StaffFormProps
       spokenLanguages: [],
       education: [],
       associations: '',
+      slug: '',
+      bookingLink: '',
     }
   );
 
@@ -284,6 +293,70 @@ export default function StaffFormNew({ staff, onSave, onCancel }: StaffFormProps
     }
   }, []);
 
+  const compressHeroImage = async (dataUrl: string, maxWidth: number = 1920, quality: number = 0.9): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+
+        // Calculate new dimensions maintaining aspect ratio
+        let width = img.width;
+        let height = img.height;
+        
+        if (width > maxWidth) {
+          const ratio = maxWidth / width;
+          width = maxWidth;
+          height = height * ratio;
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+
+        // Draw and compress with high quality
+        ctx?.drawImage(img, 0, 0, width, height);
+        const compressedDataUrl = canvas.toDataURL('image/jpeg', quality);
+        resolve(compressedDataUrl);
+      };
+      img.onerror = () => reject(new Error('Failed to load image'));
+      img.src = dataUrl;
+    });
+  };
+
+  const onDropHero = useCallback((acceptedFiles: File[]) => {
+    const file = acceptedFiles[0];
+    if (file) {
+      // Validate file type
+      if (!file.type.startsWith('image/')) {
+        setErrors(prev => ({ ...prev, heroImage: 'Please select an image file' }));
+        return;
+      }
+      
+      // Validate file size (10MB max for hero images)
+      if (file.size > 10 * 1024 * 1024) {
+        setErrors(prev => ({ ...prev, heroImage: 'Image must be smaller than 10MB' }));
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = async () => {
+        try {
+          // Compress hero image with larger dimensions and higher quality
+          const compressedImage = await compressHeroImage(reader.result as string, 1920, 0.9);
+          setFormData(prev => ({ ...prev, heroImage: compressedImage }));
+          setErrors(prev => ({ ...prev, heroImage: undefined }));
+        } catch (error) {
+          console.error('Hero image compression failed:', error);
+          setErrors(prev => ({ ...prev, heroImage: 'Failed to process image' }));
+        }
+      };
+      reader.onerror = () => {
+        setErrors(prev => ({ ...prev, heroImage: 'Failed to read image file' }));
+      };
+      reader.readAsDataURL(file);
+    }
+  }, []);
+
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept: {
@@ -291,6 +364,15 @@ export default function StaffFormNew({ staff, onSave, onCancel }: StaffFormProps
     },
     maxFiles: 1,
     maxSize: 5 * 1024 * 1024, // 5MB
+  });
+
+  const { getRootProps: getHeroRootProps, getInputProps: getHeroInputProps, isDragActive: isHeroDragActive } = useDropzone({
+    onDrop: onDropHero,
+    accept: {
+      'image/*': ['.jpeg', '.png', '.webp', '.jpg'],
+    },
+    maxFiles: 1,
+    maxSize: 10 * 1024 * 1024, // 10MB for hero images
   });
 
   const validateForm = (): boolean => {
@@ -417,6 +499,82 @@ export default function StaffFormNew({ staff, onSave, onCancel }: StaffFormProps
               {errors.picture && (
                 <Alert severity="error" sx={{ mt: 2 }}>
                   {errors.picture}
+                </Alert>
+              )}
+            </Paper>
+          </Box>
+
+          {/* Hero Image Section */}
+          <Box sx={{ mb: 4 }}>
+            <Paper 
+              elevation={2} 
+              sx={{ 
+                p: 4,
+                border: '2px dashed #e0e0e0',
+                borderRadius: 3,
+                backgroundColor: '#fafafa',
+              }}
+            >
+              <BrandTypography variant="subheader" sx={{ mb: 3, display: 'flex', alignItems: 'center' }}>
+                <PhotoCameraIcon sx={{ mr: 1 }} />
+                Hero Image (for staff detail page)
+              </BrandTypography>
+
+              <Box
+                {...getHeroRootProps()}
+                sx={{
+                  border: '2px dashed #008d80',
+                  borderRadius: 2,
+                  p: 3,
+                  cursor: 'pointer',
+                  backgroundColor: isHeroDragActive ? '#f0f8f7' : 'transparent',
+                  transition: 'all 0.2s ease',
+                  '&:hover': {
+                    backgroundColor: '#f0f8f7',
+                    borderColor: '#006b5f',
+                  },
+                }}
+              >
+                <input {...getHeroInputProps()} />
+                {formData.heroImage ? (
+                  <Box
+                    sx={{
+                      width: '100%',
+                      height: 200,
+                      backgroundImage: `url(${formData.heroImage})`,
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center',
+                      borderRadius: 2,
+                      mb: 2,
+                    }}
+                  />
+                ) : (
+                  <Box
+                    sx={{
+                      width: '100%',
+                      height: 200,
+                      bgcolor: 'grey.200',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      borderRadius: 2,
+                      mb: 2,
+                    }}
+                  >
+                    <PhotoCameraIcon sx={{ fontSize: 50, color: 'grey.500' }} />
+                  </Box>
+                )}
+                <BrandTypography variant="text" sx={{ color: 'text.secondary', mb: 1, textAlign: 'center' }}>
+                  {isHeroDragActive ? 'Drop hero image here' : 'Drag & drop or click to select hero image'}
+                </BrandTypography>
+                <BrandTypography variant="caption" sx={{ color: 'text.secondary', textAlign: 'center', display: 'block' }}>
+                  Recommended: 1920x1080px or 16:9 ratio. PNG, JPG, WEBP up to 10MB
+                </BrandTypography>
+              </Box>
+              
+              {errors.heroImage && (
+                <Alert severity="error" sx={{ mt: 2 }}>
+                  {errors.heroImage}
                 </Alert>
               )}
             </Paper>
@@ -951,6 +1109,58 @@ export default function StaffFormNew({ staff, onSave, onCancel }: StaffFormProps
             <BrandTypography variant="subheader" sx={{ mb: 2 }}>
               Additional Information
             </BrandTypography>
+
+            {/* Slug Field */}
+            <TextField
+              fullWidth
+              label="URL Slug (for staff page)"
+              value={formData.slug || ''}
+              onChange={handleChange('slug')}
+              helperText="URL-friendly name (e.g., 'dr-john-smith'). Leave empty to auto-generate from name."
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <BusinessIcon color="action" />
+                  </InputAdornment>
+                ),
+              }}
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  '&.Mui-focused fieldset': {
+                    borderColor: '#008d80',
+                  },
+                },
+                '& .MuiInputLabel-root.Mui-focused': {
+                  color: '#008d80',
+                },
+              }}
+            />
+
+            {/* Booking Link Field */}
+            <TextField
+              fullWidth
+              label="Booking Link"
+              value={formData.bookingLink || ''}
+              onChange={handleChange('bookingLink')}
+              helperText="Direct link to book appointment with this staff member"
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <LocationOnIcon color="action" />
+                  </InputAdornment>
+                ),
+              }}
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  '&.Mui-focused fieldset': {
+                    borderColor: '#008d80',
+                  },
+                },
+                '& .MuiInputLabel-root.Mui-focused': {
+                  color: '#008d80',
+                },
+              }}
+            />
 
             <TextField
               fullWidth
