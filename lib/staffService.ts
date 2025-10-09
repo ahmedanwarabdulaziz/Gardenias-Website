@@ -7,12 +7,9 @@ import {
   getDocs, 
   query, 
   orderBy,
-  serverTimestamp,
-  enableNetwork,
-  disableNetwork
+  serverTimestamp
 } from 'firebase/firestore';
-import { signInAnonymously } from 'firebase/auth';
-import { db, auth } from './firebase';
+import { db } from './firebase';
 import { uploadDataUrlToCloudflare } from './cloudflare';
 import AuthService from './auth';
 

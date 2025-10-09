@@ -170,7 +170,6 @@ export class ServiceService {
   static async getService(id: string): Promise<Service | null> {
     try {
       await this.ensureAuth();
-      const docRef = doc(db, this.COLLECTION_NAME, id);
       const docSnap = await getDocs(query(collection(db, this.COLLECTION_NAME), where('id', '==', id)));
       if (!docSnap.empty) {
         const data = docSnap.docs[0].data();
