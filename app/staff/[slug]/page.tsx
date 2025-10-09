@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import { Box, Container, Typography, Chip, Card, CardContent, Grid } from '@mui/material';
+import { Box, Container, Typography, Chip, Card, CardContent } from '@mui/material';
 import StaffHeroSection from '@/components/staff/StaffHeroSection';
 import StaffServicesSection from '@/components/staff/StaffServicesSection';
 import { PublicStaffService } from '@/lib/publicStaffService';
@@ -142,9 +142,9 @@ export default async function StaffPage({ params }: StaffPageProps) {
             >
               Education & Credentials
             </Typography>
-            <Grid container spacing={3}>
+            <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: 'repeat(2, 1fr)' }, gap: 3 }}>
               {staff.education.map((edu, index) => (
-                <Grid item xs={12} md={6} key={index}>
+                <Box key={index}>
                   <Card
                     sx={{
                       p: 3,
@@ -191,9 +191,9 @@ export default async function StaffPage({ params }: StaffPageProps) {
                       </Typography>
                     </CardContent>
                   </Card>
-                </Grid>
+                </Box>
               ))}
-            </Grid>
+            </Box>
           </Container>
         </Box>
       )}
