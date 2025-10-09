@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Box, TextField, Button, Alert, MenuItem, Select, FormControl, InputLabel } from '@mui/material';
+import { Box, TextField, Button, Alert, MenuItem, Select, FormControl, InputLabel, SelectChangeEvent } from '@mui/material';
 import { PaperPlaneTilt } from 'phosphor-react';
 
 const subjectOptions = [
@@ -56,10 +56,10 @@ export default function ContactForm() {
     });
   };
 
-  const handleSelectChange = (e: React.ChangeEvent<{ value: unknown }>) => {
+  const handleSelectChange = (e: SelectChangeEvent) => {
     setFormData({
       ...formData,
-      subject: e.target.value as string,
+      subject: e.target.value,
     });
   };
 
