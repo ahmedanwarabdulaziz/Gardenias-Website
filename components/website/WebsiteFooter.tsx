@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Box, Container, Typography, Unstable_Grid2 as Grid2 } from '@mui/material';
+import { Box, Container, Typography, Grid } from '@mui/material';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Phone, EnvelopeSimple, MapPin, FacebookLogo, InstagramLogo, LinkedinLogo, TwitterLogo, YoutubeLogo } from 'phosphor-react';
@@ -59,9 +59,9 @@ export default function WebsiteFooter() {
       {/* Main Footer Content */}
       <Box sx={{ position: 'relative', zIndex: 1, py: { xs: 6, md: 8 } }}>
         <Container maxWidth="lg">
-          <Grid2 container spacing={{ xs: 4, md: 6 }}>
+          <Grid container spacing={{ xs: 4, md: 6 }}>
             {/* About Section */}
-            <Grid2 size={{ xs: 12, md: 4 }}>
+            <Grid item xs={12} md={4}>
             <Box sx={{ mb: 3 }}>
               <Image
                 src="/images/logo.png"
@@ -128,10 +128,10 @@ export default function WebsiteFooter() {
                 );
               })}
             </Box>
-          </Grid2>
+          </Grid>
 
           {/* Quick Links */}
-          <Grid2 size={{ xs: 12, sm: 6, md: 2.5 }}>
+          <Grid item xs={12} sm={6} md={2.5}>
             <Typography
               sx={{
                 fontFamily: '"Playfair Display", serif',
@@ -196,10 +196,10 @@ export default function WebsiteFooter() {
                 </Link>
               ))}
             </Box>
-          </Grid2>
+          </Grid>
 
           {/* Business Hours */}
-          <Grid2 size={{ xs: 12, sm: 6, md: 2.5 }}>
+          <Grid item xs={12} sm={6} md={2.5}>
             <Typography
               sx={{
                 fontFamily: '"Playfair Display", serif',
@@ -291,10 +291,10 @@ export default function WebsiteFooter() {
                 </Typography>
               </Box>
             </Box>
-          </Grid2>
+          </Grid>
 
           {/* Contact Info */}
-          <Grid2 size={{ xs: 12, md: 3 }}>
+          <Grid item xs={12} md={3}>
             <Typography
               sx={{
                 fontFamily: '"Playfair Display", serif',
@@ -465,8 +465,8 @@ export default function WebsiteFooter() {
                 </Box>
               </Box>
             </Box>
-          </Grid2>
-        </Grid2>
+          </Grid>
+        </Grid>
         </Container>
       </Box>
 
