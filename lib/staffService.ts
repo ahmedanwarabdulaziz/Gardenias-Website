@@ -252,8 +252,7 @@ export class StaffService {
   // Upload staff picture to Cloudflare
   static async uploadStaffPicture(file: File, staffId: string): Promise<string> {
     try {
-      const filename = `staff_${staffId}_${Date.now()}.${file.name.split('.').pop()}`;
-      const imageUrl = await uploadDataUrlToCloudflare(URL.createObjectURL(file), filename);
+      const imageUrl = await uploadDataUrlToCloudflare(URL.createObjectURL(file));
       console.log('Staff picture uploaded to Cloudflare:', imageUrl);
       return imageUrl;
     } catch (error) {
