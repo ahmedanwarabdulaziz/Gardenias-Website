@@ -1,8 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Box, Container, Typography } from '@mui/material';
-import Grid2 from '@mui/material/Grid2';
+import { Box, Container, Typography, Unstable_Grid2 as Grid2 } from '@mui/material';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Phone, EnvelopeSimple, MapPin, FacebookLogo, InstagramLogo, LinkedinLogo, TwitterLogo, YoutubeLogo } from 'phosphor-react';
