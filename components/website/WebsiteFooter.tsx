@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Box, Container, Typography, Grid } from '@mui/material';
+import { Box, Container, Typography, Stack } from '@mui/material';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Phone, EnvelopeSimple, MapPin, FacebookLogo, InstagramLogo, LinkedinLogo, TwitterLogo, YoutubeLogo } from 'phosphor-react';
@@ -59,9 +59,13 @@ export default function WebsiteFooter() {
       {/* Main Footer Content */}
       <Box sx={{ position: 'relative', zIndex: 1, py: { xs: 6, md: 8 } }}>
         <Container maxWidth="lg">
-          <Grid container spacing={{ xs: 4, md: 6 }}>
+          <Stack
+            direction={{ xs: 'column', md: 'row' }}
+            spacing={{ xs: 4, md: 6 }}
+            sx={{ alignItems: 'flex-start' }}
+          >
             {/* About Section */}
-            <Grid item xs={12} md={4}>
+            <Box sx={{ flex: { xs: '1 1 100%', md: '1 1 33.33%' } }}>
             <Box sx={{ mb: 3 }}>
               <Image
                 src="/images/logo.png"
@@ -128,10 +132,10 @@ export default function WebsiteFooter() {
                 );
               })}
             </Box>
-          </Grid>
+          </Box>
 
           {/* Quick Links */}
-          <Grid item xs={12} sm={6} md={2.5}>
+          <Box sx={{ flex: { xs: '1 1 100%', sm: '1 1 50%', md: '1 1 20.83%' } }}>
             <Typography
               sx={{
                 fontFamily: '"Playfair Display", serif',
@@ -196,10 +200,10 @@ export default function WebsiteFooter() {
                 </Link>
               ))}
             </Box>
-          </Grid>
+          </Box>
 
           {/* Business Hours */}
-          <Grid item xs={12} sm={6} md={2.5}>
+          <Box sx={{ flex: { xs: '1 1 100%', sm: '1 1 50%', md: '1 1 20.83%' } }}>
             <Typography
               sx={{
                 fontFamily: '"Playfair Display", serif',
@@ -291,10 +295,10 @@ export default function WebsiteFooter() {
                 </Typography>
               </Box>
             </Box>
-          </Grid>
+          </Box>
 
           {/* Contact Info */}
-          <Grid item xs={12} md={3}>
+          <Box sx={{ flex: { xs: '1 1 100%', md: '1 1 25%' } }}>
             <Typography
               sx={{
                 fontFamily: '"Playfair Display", serif',
@@ -465,8 +469,8 @@ export default function WebsiteFooter() {
                 </Box>
               </Box>
             </Box>
-          </Grid>
-        </Grid>
+          </Box>
+        </Stack>
         </Container>
       </Box>
 
