@@ -14,8 +14,6 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  useTheme,
-  useMediaQuery,
 } from '@mui/material';
 import {
   Menu as MenuIcon,
@@ -52,8 +50,6 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);

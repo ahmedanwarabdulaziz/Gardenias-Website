@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Box, TextField, Button, Typography, Alert, MenuItem, Select, FormControl, InputLabel } from '@mui/material';
+import { Box, TextField, Button, Alert, MenuItem, Select, FormControl, InputLabel } from '@mui/material';
 import { PaperPlaneTilt } from 'phosphor-react';
 
 const subjectOptions = [
@@ -43,7 +43,7 @@ export default function ContactForm() {
       
       // Hide success message after 5 seconds
       setTimeout(() => setSubmitted(false), 5000);
-    } catch (err) {
+    } catch {
       setError(true);
       setSubmitted(false);
     }
@@ -56,10 +56,10 @@ export default function ContactForm() {
     });
   };
 
-  const handleSelectChange = (e: any) => {
+  const handleSelectChange = (e: React.ChangeEvent<{ value: unknown }>) => {
     setFormData({
       ...formData,
-      subject: e.target.value,
+      subject: e.target.value as string,
     });
   };
 
@@ -75,7 +75,7 @@ export default function ContactForm() {
     >
       {submitted && (
         <Alert severity="success" sx={{ mb: 2 }}>
-          Thank you for contacting us! We'll get back to you within one business day.
+          Thank you for contacting us! We&apos;ll get back to you within one business day.
         </Alert>
       )}
       

@@ -937,7 +937,7 @@ export default function ServiceForm({ service, onSave, onCancel, categories, sta
                 </Box>
 
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3, width: '100%' }}>
-                  {/* Who It's For - Single Row */}
+                  {/* Who It&apos;s For - Single Row */}
                   <Box>
                     <BrandTypography variant="text" sx={{ mb: 2, fontWeight: 600 }}>
                       Who It&apos;s For

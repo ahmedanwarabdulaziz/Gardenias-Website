@@ -65,7 +65,7 @@ export default function ConditionalLayout({
                   mx: 'auto',
                 }}
               >
-                Have questions or ready to book an appointment? We're here to help you on your wellness journey.
+                Have questions or ready to book an appointment? We&apos;re here to help you on your wellness journey.
               </Typography>
               
               <Box 

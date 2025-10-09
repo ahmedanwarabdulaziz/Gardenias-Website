@@ -1,10 +1,9 @@
 import { notFound } from 'next/navigation';
-import { Box, Container, Typography, Chip, Avatar, Card, CardContent, Grid } from '@mui/material';
+import { Box, Container, Typography, Chip, Card, CardContent, Grid } from '@mui/material';
 import StaffHeroSection from '@/components/staff/StaffHeroSection';
 import StaffServicesSection from '@/components/staff/StaffServicesSection';
 import { PublicStaffService } from '@/lib/publicStaffService';
 import { PublicCategoryService } from '@/lib/publicCategoryService';
-import { GraduationCap, Certificate, Briefcase } from 'phosphor-react';
 
 interface StaffPageProps {
   params: {

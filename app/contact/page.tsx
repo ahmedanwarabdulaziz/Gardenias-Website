@@ -8,7 +8,7 @@ export default function ContactPage() {
     <Box>
       {/* Hero Section */}
       <ContactHeroSection
-        title="We're Here to Help You"
+        title="We&apos;re Here to Help You"
         subtitle="Heal and Feel Better"
         description="Have a question or want to book an appointment? Our team will respond within one business day, or you can call us and we will help you in the spot!"
         heroImage="/images/Contactus.png"

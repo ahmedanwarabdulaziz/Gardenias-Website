@@ -15,7 +15,7 @@ export default function ServiceInfoCards({
 }: ServiceInfoCardsProps) {
   const cards = [
     {
-      title: "Who It's For",
+      title: "Who It&apos;s For",
       items: whoItsFor,
     },
     {

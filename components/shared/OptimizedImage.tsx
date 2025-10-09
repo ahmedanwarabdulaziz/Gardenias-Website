@@ -2,8 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import { Box, Skeleton, CircularProgress } from '@mui/material';
-import { getOptimizedImageUrl, imagePresets } from '@/lib/cloudflare';
+import { Box, Skeleton } from '@mui/material';
 
 interface OptimizedImageProps {
   src: string;
@@ -23,9 +22,6 @@ export default function OptimizedImage({
   alt,
   width,
   height,
-  preset,
-  quality = 80,
-  format = 'webp',
   priority = false,
   className,
   sx,
