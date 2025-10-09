@@ -6,14 +6,11 @@ import {
   TextField,
   Button,
   Avatar,
-  IconButton,
-  Typography,
   Tabs,
   Tab,
   Paper,
   FormControlLabel,
   Switch,
-  Alert,
 } from '@mui/material';
 import {
   PhotoCamera as PhotoCameraIcon,
