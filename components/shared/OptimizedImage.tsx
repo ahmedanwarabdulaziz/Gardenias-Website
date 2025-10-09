@@ -9,9 +9,6 @@ interface OptimizedImageProps {
   alt: string;
   width?: number;
   height?: number;
-  preset?: keyof typeof imagePresets;
-  quality?: number;
-  format?: 'webp' | 'avif' | 'jpeg' | 'png';
   priority?: boolean;
   className?: string;
   sx?: object;
