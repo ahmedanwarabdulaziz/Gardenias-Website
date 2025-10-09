@@ -89,7 +89,7 @@ export class SocialMediaService {
         ...data,
         createdAt: serverTimestamp(),
         updatedAt: serverTimestamp(),
-        createdBy: user?.email || 'system',
+        createdBy: user?.username || 'system',
       });
 
       return docRef.id;
